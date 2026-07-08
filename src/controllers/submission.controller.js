@@ -8,10 +8,15 @@ import { AppError } from "../middlewares/error.middleware.js";
 
 export const submitCode = async (req, res, next) => {
   try {
-    const { code, language, roomId } = req.body;
+    const { code, language, roomId, roomCode } = req.body;
 
-    
-    const room = await Room.findById(roomId).populate("problemId");
+    let room = null;
+    if (roomId) {
+      room = await Room.findById(roomId).populate("problemId");
+    }
+    if (!room && roomCode) {
+      room = await Room.findOne({ roomCode: roomCode.toUpperCase() }).populate("problemId");
+    }
 
     if (!room) return next(new AppError("Room not found", 404));
     if (room.status !== "live") return next(new AppError("Game is not active", 400));

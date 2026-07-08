@@ -65,6 +65,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
   const [newMessage, setNewMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submissionResult, setSubmissionResult] = useState(null);
+  const [submitError, setSubmitError] = useState('');
   const [gameOverData, setGameOverData] = useState(null);
   const [opponentSubmittedAlert, setOpponentSubmittedAlert] = useState(null);
   const [readyCountdown, setReadyCountdown] = useState(null);
@@ -309,11 +310,22 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
   const handleSubmit = async () => {
     setSubmitting(true);
     setSubmissionResult(null);
+    setSubmitError('');
 
     try {
+      const submissionRoomId = room.id || room._id || initialRoom.id || initialRoom._id;
+      if (!submissionRoomId && !room.roomCode) {
+        throw new Error('Unable to identify this room for submission.');
+      }
+
       const res = await axios.post(
         `${API_BASE}/submissions`,
-        { code, language, roomId: room.id || room._id },
+        {
+          code,
+          language,
+          roomId: submissionRoomId,
+          roomCode: room.roomCode || initialRoom.roomCode,
+        },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -323,6 +335,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
         username: user.username
       });
     } catch (err) {
+      setSubmitError(err.response?.data?.message || err.message || 'Submission failed');
       setSubmissionResult({
         error: err.response?.data?.message || 'Submission failed'
       });
@@ -335,7 +348,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
     `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: '#000000' }}>
+    <div className="arena-shell" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: '#000000' }}>
       {/* Background Animation */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
         <DarkVeil
@@ -350,7 +363,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
       </div>
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'radial-gradient(circle at 50% 50%, rgba(5, 5, 8, 0.4) 0%, rgba(5, 5, 8, 0.85) 90%)', zIndex: 1, pointerEvents: 'none' }} />
 
-      <div className="layout-container" style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <div className="layout-container arena-layout" style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', height: '100vh' }}>
 
       {systemAlert && (
         <div style={{
@@ -393,7 +406,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
         </div>
       )}
 
-      <header className="header" style={{
+      <header className="header arena-header" style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -454,7 +467,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
       </header>
 
       {gameState === 'live' && (
-        <div style={{ display: 'flex', width: '100%', padding: '12px 32px', background: 'var(--bg-primary)' }}>
+        <div className="arena-live-meter" style={{ display: 'flex', width: '100%', padding: '12px 32px', background: 'var(--bg-primary)' }}>
           <div style={{ flex: 1, paddingRight: roomSettings.mode === 'practice' ? '0' : '16px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem', fontWeight: '700' }}>
               <span style={{ color: 'var(--color-cyan)' }}>YOU</span>
@@ -479,7 +492,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
       )}
 
       {gameState === 'waiting' && (
-        <div style={{
+        <div className="arena-waiting-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1.2fr 1fr',
           gap: '32px',
@@ -490,7 +503,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
           flex: 1
         }}>
           {/* Left Column: Match Details & Lobby Chat */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="arena-waiting-left" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {/* Match info card */}
             <div className="glass-panel" style={{ padding: '24px' }}>
               <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-cyan)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -593,7 +606,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
           </div>
 
           {/* Right Column: Joined Competitors & Status */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div className="arena-waiting-right" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <div className="glass-panel glass-panel-glow-cyan" style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifySelf: 'space-between', justifyContent: 'space-between', marginBottom: '20px' }}>
                 <h3 style={{ fontSize: '1.2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -839,7 +852,7 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
 
       {/* Live Coding Arena */}
       {gameState === 'live' && problem && (
-        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '2px', background: 'var(--border-color)', height: 'calc(100vh - 120px)' }}>
+        <div className="arena-live-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '2px', background: 'var(--border-color)', minHeight: 'calc(100vh - 120px)' }}>
 
           {/* Left Column: Problem & Chat Tabs */}
           <div style={{ background: 'var(--bg-primary)', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
@@ -1047,6 +1060,18 @@ export default function GameArena({ user, token, initialRoom, socket, onLeave })
                 gap: '8px'
               }}>
                 <CheckCircle2 size={20} /> You won the duel! +24 rating 🏆
+              </div>
+            )}
+
+            {(submissionResult?.error || submitError) && (
+              <div style={{
+                background: 'rgba(239, 68, 68, 0.1)',
+                borderTop: '1px solid rgba(239, 68, 68, 0.2)',
+                padding: '14px 24px',
+                color: 'var(--color-red)',
+                fontWeight: '600'
+              }}>
+                {submissionResult?.error || submitError}
               </div>
             )}
 
