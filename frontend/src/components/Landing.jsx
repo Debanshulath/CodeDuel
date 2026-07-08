@@ -104,23 +104,21 @@ export default function Landing({ onNavigateToAuth }) {
       </header>
 
       {/* Main Hero content */}
-      <main style={{
+      <main className="landing-main" style={{
         position: 'relative',
         zIndex: 2,
         flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
+        display: 'grid',
+        gridTemplateColumns: '1.15fr 0.85fr',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: '60px 24px',
+        gap: '32px',
+        padding: '40px 24px 60px',
         maxWidth: '1200px',
         width: '100%',
         margin: '0 auto',
-        textAlign: 'center'
+        textAlign: 'left'
       }}>
-        
-        {/* Hero Title */}
-        <div className="animate-fade-in" style={{ maxWidth: '800px', marginBottom: '40px' }}>
+        <div className="landing-hero animate-fade-in" style={{ maxWidth: '720px' }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -134,53 +132,152 @@ export default function Landing({ onNavigateToAuth }) {
             fontWeight: '600',
             textTransform: 'uppercase',
             letterSpacing: '1px',
-            marginBottom: '20px'
+            marginBottom: '22px',
+            boxShadow: '0 0 0 1px rgba(0,242,254,0.08), 0 12px 40px rgba(0,242,254,0.08)'
           }}>
             <Terminal size={14} />
             The Ultimate Coding Arena
           </div>
           <h1 style={{
-            fontSize: '3.6rem',
+            fontSize: 'clamp(3.1rem, 5.2vw, 5rem)',
             fontWeight: 900,
             lineHeight: 1.15,
             letterSpacing: '-1.5px',
-            marginBottom: '20px',
+            marginBottom: '18px',
             color: '#f8fbff',
-            textShadow: '0 0 24px rgba(0, 242, 254, 0.18)'
+            textShadow: '0 0 24px rgba(0, 242, 254, 0.18)',
+            maxWidth: '12ch'
           }}>
             Clash in Speed.<br />
             Conquer the Algorithms.
           </h1>
           <p style={{
             color: 'var(--text-secondary)',
-            fontSize: '1.25rem',
+            fontSize: '1.1rem',
             lineHeight: '1.6',
-            maxWidth: '650px',
-            margin: '0 auto'
+            maxWidth: '58ch',
+            margin: '0 0 28px 0'
           }}>
             Prove your coding supremacy. Host custom rooms, duel friends in real-time, see their live progress, and claim your place in the global Hall of Fame.
           </p>
+
+          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginBottom: '28px' }}>
+            <button
+              onClick={() => onNavigateToAuth(false)}
+              className="btn btn-cyan glow-pulse"
+              style={{
+                padding: '16px 34px',
+                fontSize: '1rem',
+                borderRadius: '16px',
+              }}
+            >
+              Enter the Arena Now
+              <ArrowRight size={20} />
+            </button>
+            <button
+              onClick={() => onNavigateToAuth(true)}
+              className="btn btn-outline"
+              style={{
+                padding: '16px 28px',
+                fontSize: '1rem',
+                borderRadius: '16px',
+                background: 'rgba(255,255,255,0.03)'
+              }}
+            >
+              Log In
+            </button>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+            gap: '14px',
+            maxWidth: '620px'
+          }}>
+            {[
+              { label: 'Live duels', value: '1v1 + squad' },
+              { label: 'Match mode', value: 'Real-time' },
+              { label: 'Progress', value: 'Visible live' },
+            ].map((item) => (
+              <div key={item.label} className="glass-panel" style={{ padding: '16px 18px', textAlign: 'left', background: 'rgba(10,11,16,0.55)' }}>
+                <div style={{ color: 'var(--text-muted)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1.3px', marginBottom: '8px', fontWeight: 700 }}>
+                  {item.label}
+                </div>
+                <div style={{ color: '#fff', fontWeight: 700, fontSize: '0.98rem' }}>{item.value}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Action Button */}
-        <button
-          onClick={() => onNavigateToAuth(false)}
-          className="btn btn-cyan glow-pulse animate-fade-in"
-          style={{
-            padding: '16px 36px',
-            fontSize: '1.1rem',
-            borderRadius: '12px',
-            marginBottom: '60px'
-          }}
-        >
-          Enter the Arena Now
-          <ArrowRight size={20} />
-        </button>
+        <div className="landing-showcase animate-fade-in" style={{ position: 'relative', minHeight: '640px' }}>
+          <div style={{
+            position: 'absolute',
+            inset: '30px 0 0 24px',
+            borderRadius: '28px',
+            background: 'radial-gradient(circle at 30% 20%, rgba(0,242,254,0.18), transparent 30%), rgba(10,11,16,0.58)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            boxShadow: '0 24px 90px rgba(0,0,0,0.35)',
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            overflow: 'hidden'
+          }}>
+            <div style={{ padding: '22px 22px 0 22px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 700 }}>Live Arena Preview</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-green)', fontWeight: 700, fontSize: '0.78rem' }}>
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--color-green)', boxShadow: '0 0 10px var(--color-green)' }} />
+                  Match Ready
+                </div>
+              </div>
+              <div style={{ display: 'grid', gap: '14px' }}>
+                <div className="glass-panel" style={{ padding: '18px', background: 'rgba(255,255,255,0.03)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <strong style={{ color: 'var(--color-cyan)' }}>You</strong>
+                    <span style={{ color: 'var(--text-secondary)' }}>00:28</span>
+                  </div>
+                  <div style={{ height: '8px', borderRadius: '999px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                    <div style={{ width: '72%', height: '100%', background: 'linear-gradient(90deg, var(--color-cyan), rgba(0,242,254,0.55))', borderRadius: '999px' }} />
+                  </div>
+                </div>
+                <div className="glass-panel" style={{ padding: '18px', background: 'rgba(255,255,255,0.03)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <strong style={{ color: 'var(--color-purple)' }}>Opponent</strong>
+                    <span style={{ color: 'var(--text-secondary)' }}>00:31</span>
+                  </div>
+                  <div style={{ height: '8px', borderRadius: '999px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                    <div style={{ width: '58%', height: '100%', background: 'linear-gradient(90deg, var(--color-purple), rgba(155,81,224,0.55))', borderRadius: '999px' }} />
+                  </div>
+                </div>
+                <div className="glass-panel" style={{ padding: '18px', background: 'rgba(255,255,255,0.03)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <strong style={{ color: 'var(--text-primary)' }}>Problem Focus</strong>
+                    <span style={{ color: 'var(--text-secondary)' }}>Sliding Window</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    {['Input', 'Logic', 'Submit'].map((chip, idx) => (
+                      <span key={chip} style={{
+                        padding: '6px 10px',
+                        borderRadius: '999px',
+                        background: idx === 2 ? 'rgba(0,242,254,0.12)' : 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        color: idx === 2 ? 'var(--color-cyan)' : 'var(--text-secondary)',
+                        fontSize: '0.75rem',
+                        fontWeight: 700
+                      }}>
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Feature Cards Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
           gap: '24px',
           width: '100%'
         }} className="animate-fade-in">
@@ -256,7 +353,7 @@ export default function Landing({ onNavigateToAuth }) {
       <footer style={{
         position: 'relative',
         zIndex: 2,
-        padding: '24px',
+        padding: '22px 24px',
         textAlign: 'center',
         fontSize: '0.85rem',
         color: 'var(--text-muted)',
