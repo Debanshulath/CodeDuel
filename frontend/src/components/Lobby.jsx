@@ -251,6 +251,21 @@ export default function Lobby({ user, setUser, token, onLogout, onCreateRoom, on
         </div>
       </nav>
 
+      <div className="mobile-nav-strip">
+        <button className={`mobile-nav-chip ${activeView === 'dashboard' ? 'active' : ''}`} onClick={() => { setActiveView('dashboard'); setShowConfig(false); }}>
+          Dashboard
+        </button>
+        <button className={`mobile-nav-chip ${activeView === 'leaderboard' ? 'active' : ''}`} onClick={() => { setActiveView('leaderboard'); setShowConfig(false); }}>
+          Leaderboard
+        </button>
+        <button className={`mobile-nav-chip ${activeView === 'problems' ? 'active' : ''}`} onClick={() => { setActiveView('problems'); setShowConfig(false); }}>
+          Problems
+        </button>
+        <button className={`mobile-nav-chip ${activeView === 'practiceHistory' ? 'active' : ''}`} onClick={() => { setActiveView('practiceHistory'); setShowConfig(false); }}>
+          History
+        </button>
+      </div>
+
       <div className="dashboard-container">
         {!showConfig ? (
           <>
