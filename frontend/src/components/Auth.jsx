@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Shield, Mail, User, Lock, ArrowRight, Eye, EyeOff, Terminal, GraduationCap, Briefcase, Calendar } from 'lucide-react';
 
-const API_BASE = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_BASE || 'http://localhost:5000/api');
-const BACKEND_URL = import.meta.env.PROD ? '' : (import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000');
+const API_BASE = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_BASE || 'https://codeduel-zxd9.onrender.com/api');
+const BACKEND_URL = import.meta.env.PROD ? '' : (import.meta.env.VITE_BACKEND_URL || 'https://codeduel-zxd9.onrender.com');
 
 const YEAR_OPTIONS = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year+', 'Postgraduate'];
 

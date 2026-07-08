@@ -28,7 +28,7 @@ router.get("/providers", (req, res) => {
   });
 });
 
-const frontendRedirect = process.env.FRONTEND_URL || "http://localhost:5173";
+const frontendRedirect = process.env.FRONTEND_URL || "https://codeduel-zxd9.onrender.com";
 
 /* Google OAuth */
 router.get("/google", (req, res, next) => {

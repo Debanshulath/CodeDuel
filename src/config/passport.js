@@ -17,7 +17,7 @@ export const getOAuthCallbackUrl = (req, provider) => {
   }
 
   const forwardedProto = req.headers["x-forwarded-proto"] || req.protocol || "http";
-  const forwardedHost = req.headers["x-forwarded-host"] || req.get("host") || "localhost:5000";
+  const forwardedHost = req.headers["x-forwarded-host"] || req.get("host") || "codeduel-zxd9.onrender.com";
   return `${forwardedProto}://${forwardedHost}/api/auth/${provider}/callback`;
 };
 
@@ -28,7 +28,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: `${process.env.BACKEND_URL || "http://localhost:5000"}/api/auth/google/callback`,
+        callbackURL: `${process.env.BACKEND_URL || "https://codeduel-zxd9.onrender.com"}/api/auth/google/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
@@ -65,7 +65,7 @@ if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: `${process.env.BACKEND_URL || "http://localhost:5000"}/api/auth/github/callback`,
+        callbackURL: `${process.env.BACKEND_URL || "https://codeduel-zxd9.onrender.com"}/api/auth/github/callback`,
         scope: ["user:email"],
       },
       async (accessToken, refreshToken, profile, done) => {
