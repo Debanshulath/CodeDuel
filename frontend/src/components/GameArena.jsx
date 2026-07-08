@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import DarkVeil from './DarkVeil/DarkVeil';
 
-const API_BASE = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_BASE || 'https://codeduel-6kqw.onrender.com/api');
+const API_BASE = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_BASE || 'https://codeduel-zxd9.onrender.com/api');
 
 const SUPPORTED_LANGUAGES = [
   { label: 'JavaScript', value: 'javascript' },

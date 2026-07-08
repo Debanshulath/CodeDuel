@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { ParticleCard, GlobalSpotlight } from './MagicBento';
 
-const API_BASE = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_BASE || 'https://codeduel-6kqw.onrender.com/api');
+const API_BASE = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_BASE || 'https://codeduel-zxd9.onrender.com/api');
 
 export default function PracticeHistory({ token, onClose }) {
   const [loading, setLoading] = useState(true);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE || 'https://codeduel-6kqw.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_BASE || 'https://codeduel-zxd9.onrender.com/api',
   timeout: 15000,
 });
 

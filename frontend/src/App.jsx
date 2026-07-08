@@ -27,7 +27,7 @@ export default function App() {
 
   useEffect(() => {
     if (room && token) {
-      const socketUrl = import.meta.env.PROD ? '' : (import.meta.env.VITE_SOCKET_URL || 'https://codeduel-6kqw.onrender.com');
+      const socketUrl = import.meta.env.PROD ? '' : (import.meta.env.VITE_SOCKET_URL || 'https://codeduel-zxd9.onrender.com');
       const newSocket = io(socketUrl, {
         auth: { token },
       });
