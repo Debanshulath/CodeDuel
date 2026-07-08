@@ -1074,6 +1074,7 @@ body {
 @media (max-width: 768px) {
   body {
     background-attachment: scroll;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 34px 34px, 34px 34px;
   }
 
   .header,
@@ -1088,6 +1089,11 @@ body {
     min-height: 100vh;
   }
 
+  .glass-panel {
+    border-radius: 20px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
+  }
+
   .arena-header {
     flex-wrap: wrap;
     gap: 12px;
@@ -1096,6 +1102,20 @@ body {
 
   .arena-header > div {
     flex: 1 1 auto;
+  }
+
+  .arena-header > div:first-child,
+  .arena-header > div:last-child {
+    flex-basis: 100%;
+    justify-content: center;
+  }
+
+  .arena-header > div:nth-child(2) {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .arena-live-meter {
@@ -1110,23 +1130,34 @@ body {
     padding: 20px 16px !important;
   }
 
+  .arena-waiting-grid > div {
+    border-radius: 22px;
+  }
+
   .arena-live-grid {
     grid-template-columns: 1fr !important;
     min-height: auto !important;
     height: auto !important;
+    gap: 14px !important;
+    background: transparent !important;
   }
 
   .arena-live-grid > div {
     min-height: 0;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 16px 30px rgba(0,0,0,0.2);
   }
 
   .arena-live-grid textarea {
     font-size: 0.92rem !important;
-    padding: 16px !important;
+    padding: 18px 16px !important;
+    line-height: 1.7 !important;
   }
 
   .arena-live-grid .btn {
     padding: 10px 14px;
+    border-radius: 12px;
   }
 
   .arena-live-grid .btn span {
@@ -1145,6 +1176,15 @@ body {
     white-space: nowrap;
   }
 
+  .arena-live-grid > div:first-child > div:first-child {
+    display: flex;
+    align-items: center;
+  }
+
+  .arena-live-grid > div:first-child > div:nth-child(2) {
+    padding: 18px 16px !important;
+  }
+
   .dash-header {
     flex-direction: column;
   }
@@ -1161,6 +1201,7 @@ body {
   .lobby-main {
     padding: 24px 16px;
     gap: 20px;
+    grid-template-columns: 1fr;
   }
 
   .top-navbar {
@@ -1169,5 +1210,45 @@ body {
 
   .nav-actions {
     gap: 12px;
+  }
+
+  .landing-main {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+    padding: 28px 16px 44px !important;
+    text-align: center !important;
+  }
+
+  .landing-hero {
+    max-width: 100% !important;
+  }
+
+  .landing-main h1 {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 11ch;
+  }
+
+  .landing-main p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .landing-main > div:last-child {
+    min-height: 420px !important;
+  }
+
+  .landing-main > div:last-child > div {
+    inset: 12px 0 0 0 !important;
+    border-radius: 24px !important;
+  }
+
+  .landing-main > div:last-child .glass-panel {
+    border-radius: 18px;
+  }
+
+  .landing-main > div:last-child + div,
+  .landing-showcase {
+    width: 100%;
   }
 }
