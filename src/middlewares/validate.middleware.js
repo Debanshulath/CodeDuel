@@ -33,7 +33,7 @@ export const validateLogin = (req, res, next) => {
 };
 
 export const validateSubmission = (req, res, next) => {
-  const { code, language, roomId } = req.body;
+  const { code, language, roomId, roomCode } = req.body;
   const allowedLanguages = [
     "javascript", "typescript", "python", "cpp", "c", "java",
     "go", "rust", "kotlin", "csharp", "php", "ruby", "swift"
@@ -48,8 +48,11 @@ export const validateSubmission = (req, res, next) => {
       message: `Language must be one of: ${allowedLanguages.join(", ")}`,
     });
   }
-  if (!roomId) {
-    return res.status(400).json({ success: false, message: "roomId is required" });
+  if (!roomId && !roomCode) {
+    return res.status(400).json({
+      success: false,
+      message: "roomId or roomCode is required",
+    });
   }
   next();
 };
