@@ -7,7 +7,7 @@ import PracticeStats from './PracticeStats';
 import PracticeHistory from './PracticeHistory';
 import { normalizeTopic } from '../../../src/utils/topic.utils.js';
 
-const API_BASE = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_BASE || 'https://codeduel-zxd9.onrender.com/api');
+const API_BASE = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_BASE || 'https://codeduel-6kqw.onrender.com/api');
 
 export default function Lobby({ user, setUser, token, onLogout, onCreateRoom, onJoinRoom }) {
   const [roomCode, setRoomCode] = useState('');
